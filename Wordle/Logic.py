@@ -11,19 +11,15 @@ class Logic :
     def check(self,word):
 
         out = ''
-        print(self.RANDOM == '')
-        print(self.RANDOM == '\n')
-        print(self.RANDOM)
         word = word.lower()
         for i in range(len(word)):
-            print(i)
-            print(word[i] + self.RANDOM[i])
             if word[i] == self.RANDOM[i]:
                 out += 'x'
             elif word[i] in self.RANDOM:
                 out += 'l'
             else:
                 out += 'o'
+
         return out
 
     def __init__(self):

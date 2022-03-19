@@ -30,7 +30,7 @@ TOTAL_ROWS = 6
 CUSHION = 20
 squares = []
 
-TEXT_FONT = pygame.font.Font('Helvetica-Neue-Font/Helvetica Neue UltraLight/Helvetica Neue UltraLight.ttf', 55)
+TEXT_FONT = pygame.font.Font('Helvetica-Neue-Font/Helvetica Neue Medium Extended/Helvetica Neue Medium Extended.ttf', 55)
 
 class square(pygame.Rect):
     def __init__(self, x ,y, height, width, surface ):
@@ -42,7 +42,6 @@ class square(pygame.Rect):
     def draw_sq(self):
         pygame.draw.rect(self.surface,self.COLOR,self.rect)
 
-
     def change_text(self,letter):
         self.text = letter
         self.draw_sq()
@@ -53,9 +52,6 @@ class square(pygame.Rect):
     def change_color_sq(self, color):
 
         self.COLOR = color
-
-        print('Change color ')
-        print(self.COLOR)
 
 
 def set_squares():
@@ -109,6 +105,7 @@ def update():
 def main():
     clock = pygame.time.Clock()
     run = True
+    won = False
     row = 0
     column = 0
     set_squares()
@@ -121,7 +118,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-            if event.type == pygame.KEYDOWN and row!=6:
+            if event.type == pygame.KEYDOWN and row!=6 and won == False:
                 if event.key == pygame.K_RETURN:
                     word = ''
                     #Processing the word
@@ -130,13 +127,14 @@ def main():
                     output = logic.check(word)
 
                     #Changing the color of the text
-                    print(output)
+                    if output == 'xxxxx':
+                        won = True
                     for i in range(TOTAL_COLUMNS):
                         if output[i] == 'x':
-                            print('getting in')
+
                             squares[row][i].change_color_sq(GREEN)
                         elif output[i] == 'l':
-                            print('getting in')
+
                             squares[row][i].change_color_sq(YELLOW)
 
                     #Dealing with line change
@@ -150,10 +148,12 @@ def main():
                     squares[row][column].change_text('')
 
                 elif column!=5:
-
-                    key = KEYS[event.key]
-                    squares[row][column].change_text(key)
-                    column+=1
+                    try :
+                        key = KEYS[event.key]
+                        squares[row][column].change_text(key)
+                        column+=1
+                    finally:
+                        pass
         update()
 
 if __name__ == '__main__':
